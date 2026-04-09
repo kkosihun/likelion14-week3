@@ -1,121 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+// //메인 함수
+import React, { useState } from 'react';
+import {Buttonadd, Buttonadel} from './MemoButton'
+import MemoList from './MemoInsert';
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+function Memo(){
+    const [text, setText] = useState('');//text를 계속 저장
+    const [memo, setMemo] = useState([]);//메모 배열 저장
+    const addClick = () => {
+        setMemo([text, ... memo]) //최근에 추가한 목록이 위로
+        setText('')    //추가 버튼 누르면 텍스트 초기화
+        // console.log(text);
+    };
+
+    //1. 지울 번호(delindex)를 가져옴
+    const delClick = (delindex) => {
+        const newMemo = memo.filter((_, text) => text !== delindex);
+        setMemo(newMemo)
+    };
+    
+  
+
+    return(
+        <div 
+            style={{
+            display: 'flex',
+            backgroundColor: '#f0e085',
+            minHeight: '100vh',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '10px',
+        }}>
+            <h1>MemoList</h1>
+            <div>
+                <input 
+                    style={{    //텍스트 CSS
+                        margin: '10px',
+                        width: '300px',
+                        height: '40px',
+                        borderRadius:'10px',
+                    }}
+                    value={text} 
+                    type="text" 
+                    onChange={(e) => setText(e.target.value)}/>
+                <Buttonadd onClick = {addClick} />
+
+            </div>
+            <p>
+                {memo.map((memo, text) => {
+                 return (
+                    <p 
+                        style={{
+                            width: '400px',
+                            height: '60px',
+                            backgroundColor:'#ffffff',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems:'center',
+                            borderRadius:'10px',
+                            padding: '10px',
+                            
+                        }}>
+
+                        {memo}
+                        <Buttonadel onClick={() => delClick(text)}/>
+                    </p>
+                        
+                    );
+                    })}
+            </p>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    );
 }
 
-export default App
+export default Memo;
