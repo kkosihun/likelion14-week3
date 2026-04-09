@@ -1,7 +1,6 @@
 // //메인 함수
 import React, { useState } from 'react';
 import {Buttonadd, Buttonadel} from './MemoButton'
-import MemoList from './MemoInsert';
 
 
 function Memo(){
